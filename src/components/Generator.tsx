@@ -86,7 +86,7 @@ export default () => {
     setLoading(true)
     setCurrentAssistantMessage('')
     setCurrentError(null)
-    const storagePassword = localStorage.getItem('pass')
+    const openId = getCookie('highEQ')
     try {
       const controller = new AbortController()
       setController(controller)
@@ -97,18 +97,13 @@ export default () => {
           content: currentSystemRoleSettings(),
         })
       }
-      const timestamp = Date.now()
-      const response = await fetch('/api/generate', {
+      const response = await fetch('/api/openai/completions/stream', {
         method: 'POST',
+        headers: new Headers({ 'content-type': 'application/json' }),
         body: JSON.stringify({
-          messages: requestMessageList,
-          time: timestamp,
-          pass: storagePassword,
-          sign: await generateSignature({
-            t: timestamp,
-            m: requestMessageList?.[requestMessageList.length - 1]?.content || '',
-          }),
-          temperature: temperature(),
+          content: requestMessageList[requestMessageList.length - 1].content,
+          sessionId: openId,
+          type: 1,
         }),
         signal: controller.signal,
       })
@@ -133,8 +128,24 @@ export default () => {
           if (char === '\n' && currentAssistantMessage().endsWith('\n'))
             continue
 
-          if (char)
-            setCurrentAssistantMessage(currentAssistantMessage() + char)
+          // 处理累积的数据块
+          const chunks = char.split('\n')
+          for (let i = 0; i < chunks.length - 1; i++) {
+            const chunk = chunks[i]
+            if (chunk.startsWith('data:')) {
+              try {
+                const jsonData = JSON.parse(chunk.slice(5)) // 剔除前5个字符 'data:'
+                const message = jsonData.data.message
+                if (message)
+                  setCurrentAssistantMessage(currentAssistantMessage() + message)
+              } catch (parseError) {
+                console.error('Failed to parse JSON chunk:', parseError)
+              }
+            }
+          }
+
+          // if (char)
+          //   setCurrentAssistantMessage(currentAssistantMessage() + char.data.data.message)
 
           isStick() && instantToBottom()
         }
@@ -200,6 +211,13 @@ export default () => {
       e.preventDefault()
       handleButtonClick()
     }
+  }
+
+  function getCookie(name: string): string | null {
+    const value = `; ${document.cookie}`
+    const parts = value.split(`; ${name}=`)
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null
+    return null
   }
 
   return (
