@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from '../../../layouts/Layout.astro'
 ---
 
 <Layout title="Password Protection">
@@ -27,20 +27,48 @@ submitButton.onclick = handleSubmit
 
 async function handleSubmit() {
   const password = input.value
-  const response = await fetch('/api/oauth/render/alipay', {
+  console.log(window.location.href)
+
+// 获取当前页面的 URL
+  const url = new URL(window.location.href);
+  const params = new URLSearchParams(url.search);
+// 获取特定参数的值
+  const socialCode = params.get('auth_code')
+  const socialState = params.get('state')
+  const clientId = params.get('app_id')
+  const source = params.get('source')==='alipay_wallet'?'alipay':params.get('source')
+  const scope = params.get('scope')
+
+  const response = await fetch('/api/oauth/callback/alipay', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      socialCode,socialState,clientId,source,scope
+    }),
   })
   const responseJson = await response.json()
   console.log(responseJson)
   if (responseJson.code === 200) {
-    window.location.href = responseJson.msg; // 直接跳转到重定向 URL
+    const openId = getCookie('highEQ');
+    localStorage.setItem('openId', openId)
+    window.location.href = '/'
   } else {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    inputContainer.classList.add('invalid')
+    setTimeout(() => {
+      inputContainer.classList.remove('invalid')
+    }, 300)
   }
 }
+
+function getCookie(name: string): string | null {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  return null;
+}
+
 </script>
 
 <style>
