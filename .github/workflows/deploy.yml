@@ -23,7 +23,7 @@ jobs:
         with:
           version: latest
       - name: Clear pnpm cache
-        run: pnpm cache clean --force
+        run: pnpm store prune
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
