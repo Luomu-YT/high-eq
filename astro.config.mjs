@@ -63,7 +63,7 @@ export default defineConfig({
   output: 'server',
   adapter: envAdapter(),
   server: {
-    port: 80,
+    port: 443,
   },
   vite: {
     plugins: [
