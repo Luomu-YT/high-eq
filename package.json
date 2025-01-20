@@ -35,7 +35,6 @@
     "undici": "^5.22.1"
   },
   "devDependencies": {
-    "@evan-yang/eslint-config": "^1.0.9",
     "@iconify-json/carbon": "^1.1.18",
     "@types/markdown-it": "^12.2.3",
     "@typescript-eslint/parser": "^5.60.0",
