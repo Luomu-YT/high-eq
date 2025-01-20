@@ -18,8 +18,8 @@ const envAdapter = () => {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astronaut.github.io',
-  base: 'high-eq',
+  site: 'https://Luomu-YT.github.io',
+  base: '/high-eq',
   integrations: [
     unocss(),
     solidJs(),
