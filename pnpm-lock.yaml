@@ -20,6 +20,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^3.5.0
         version: 3.5.0(astro@2.7.0(@types/node@20.6.2)(terser@5.19.4))(react@18.2.0)
+      '@fingerprintjs/fingerprintjs':
+        specifier: ^4.5.1
+        version: 4.5.1
       '@zag-js/slider':
         specifier: ^0.16.0
         version: 0.16.0
@@ -1052,6 +1055,9 @@ packages:
     resolution: {integrity: sha512-pWXK26Eo/e1eUO9qpEAkODOr1uKwWbOKk6EteE8ZptUTjFhsn/qt7QggbaurTeWGQDNiFnYVQu/EITRFHw8rsg==}
     peerDependencies:
       eslint: ^8.0.0
+
+  '@fingerprintjs/fingerprintjs@4.5.1':
+    resolution: {integrity: sha512-hKJaRoLHNeUUPhb+Md3pTlY/Js2YR4aXjroaDHpxrjoM8kGnEFyZVZxXo6l3gRyKnQN52Uoqsycd3M73eCdMzw==}
 
   '@humanwhocodes/config-array@0.11.11':
     resolution: {integrity: sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==}
@@ -5562,6 +5568,10 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
       - typescript
+
+  '@fingerprintjs/fingerprintjs@4.5.1':
+    dependencies:
+      tslib: 2.6.2
 
   '@humanwhocodes/config-array@0.11.11':
     dependencies:

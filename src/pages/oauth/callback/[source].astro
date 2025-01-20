@@ -1,0 +1,81 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+const { source } = Astro.params;
+
+---
+
+<Layout title="登录中">
+  <main class="h-screen col-fcc">
+    <div class="flex flex-col items-center gap-4">
+      <div class="i-carbon-circle-dash animate-spin text-3xl"></div>
+      <div class="text-gray-500">登录中...</div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+async function handleSubmit() {
+  try {
+    // 获取当前页面的 URL 参数
+    const url = new URL(window.location.href)
+    const params = new URLSearchParams(url.search)
+
+    const socialCode = params.get('auth_code')
+    const socialState = params.get('state')
+    const clientId = params.get('app_id')
+    const source = params.get('source') === 'alipay_wallet' ? 'alipay' : params.get('source')
+    const scope = params.get('scope')
+
+    const response = await fetch(`/api/oauth/callback/${source}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        socialCode,
+        socialState,
+        clientId,
+        source,
+        scope,
+      }),
+    })
+    const responseJson = await response.json()
+
+    if (responseJson.code === 200) {
+      const openId = getCookie('highEQ')
+      localStorage.setItem('openId', openId)
+      window.location.href = '/'
+    } else {
+      throw new Error(`登录失败: ${responseJson.msg || '未知错误'}`)
+    }
+  } catch (error) {
+    console.error('登录失败:', error)
+    // 可以在这里添加错误提示
+  }
+}
+
+function getCookie(name: string): string | null {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null
+  return null
+}
+
+// 页面加载完成后立即执行登录
+window.addEventListener('load', handleSubmit)
+</script>
+
+<style>
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
