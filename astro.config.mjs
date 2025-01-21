@@ -60,7 +60,7 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'server',
+  output: 'static',
   adapter: envAdapter(),
   server: {
     port: 443,

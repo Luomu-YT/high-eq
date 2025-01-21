@@ -3,7 +3,7 @@
   NODE_VERSION = "18"
 
 [build]
-  command = "pnpm build"
+  command = "OUTPUT=netlify pnpm build"
   publish = "dist"
 
 [[headers]]
