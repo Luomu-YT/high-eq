@@ -3,7 +3,7 @@
   NODE_VERSION = "18"
 
 [build]
-  command = "OUTPUT=netlify astro build"
+  command = "pnpm build"
   publish = "dist"
 
 [[headers]]
