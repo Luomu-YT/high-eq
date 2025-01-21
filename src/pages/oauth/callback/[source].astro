@@ -1,17 +1,13 @@
 ---
 import Layout from '../../../layouts/Layout.astro'
 
-// export async function getStaticPaths() {
-//   // 返回所有可能的路径
-//   return [
-//     { params: { source: 'github' } },
-//     { params: { source: 'google' } },
-//     { params: { source: 'alipay' } },
-//     // 添加其他可能的 source 值
-//   ];
-// }
-
-export const prerender = true;
+export async function getStaticPaths() {
+  // 返回所有可能的路径
+  return [
+    { params: { source: 'alipay' } },
+    // 添加其他可能的 source 值
+  ];
+}
 
   const { source } = Astro.params;
 
