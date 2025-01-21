@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config'
-import unocss from 'unocss/astro'
+import unocss from '@unocss/astro'
 import solidJs from '@astrojs/solid-js'
 
 import node from '@astrojs/node'
