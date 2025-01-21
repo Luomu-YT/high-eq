@@ -59,14 +59,13 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'server',
+  output: 'static',
   adapter: node({ mode: 'standalone' }),
   server: {
     port: 443,
   },
   vite: {
     plugins: [
-      netlify(),
       process.env.OUTPUT === 'vercel' && disableBlocks(),
       process.env.OUTPUT === 'netlify' && disableBlocks(),
     ],
