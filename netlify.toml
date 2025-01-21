@@ -3,8 +3,12 @@
   NODE_VERSION = "18"
 
 [build]
-  command = "pnpm build OUTPUT=netlify "
+  command = "pnpm build"
   publish = "dist"
+
+[[edge_functions]]
+  function = "astro"
+  path = "/*"
 
 [[headers]]
   for = "/manifest.webmanifest"
