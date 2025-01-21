@@ -8,18 +8,17 @@ import vercel from '@astrojs/vercel/edge'
 import netlify from '@astrojs/netlify/edge-functions'
 import disableBlocks from './plugins/disableBlocks'
 
-const envAdapter = () => {
-  switch (process.env.OUTPUT) {
-    case 'vercel': return vercel()
-    case 'netlify': return netlify()
-    default: return node({ mode: 'standalone' })
-  }
-}
+// const envAdapter = () => {
+//   switch (process.env.OUTPUT) {
+//     case 'vercel': return vercel()
+//     case 'netlify': return netlify()
+//     default: return node({ mode: 'standalone' })
+//   }
+// }
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://Luomu-YT.github.io',
-  base: 'high-eq',
   integrations: [
     unocss(),
     solidJs(),
@@ -60,8 +59,8 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'static',
-  adapter: envAdapter(),
+  output: 'server',
+  adapter: netlify(),
   server: {
     port: 443,
   },
