@@ -19,6 +19,7 @@ const envAdapter = () => {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://Luomu-YT.github.io',
+  base: '/',
   integrations: [
     unocss(),
     solidJs(),
