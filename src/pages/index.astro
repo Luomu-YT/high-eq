@@ -33,7 +33,7 @@ async function checkCurrentAuth() {
   // })
   // const responseJson = await response.json()
   if (!openId)
-    window.location.href = '/password'
+    window.location.href = '/oauth/password'
 }
 
 function getCookie(name: string): string | null {
