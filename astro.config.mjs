@@ -60,18 +60,16 @@ export default defineConfig({
     }),
   ],
   output: 'server',
-  adapter: envAdapter(),
+  adapter: netlify(),
   server: {
     port: 443,
   },
   vite: {
     plugins: [
+      netlify(),
       process.env.OUTPUT === 'vercel' && disableBlocks(),
       process.env.OUTPUT === 'netlify' && disableBlocks(),
     ],
-    // ssr: {
-    //   noExternal: ['undici'], // 允许 Vite 打包 undici
-    // },
     server: {
       proxy: {
         '/api': {

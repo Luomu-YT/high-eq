@@ -1,4 +1,4 @@
-// netlify/edge-functions/astro.js
+// netlify/edge-edge-functions/astro.js
 export default async (request) => {
 
     const value = `; ${document.cookie}`
