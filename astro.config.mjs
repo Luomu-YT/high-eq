@@ -11,7 +11,7 @@ import disableBlocks from './plugins/disableBlocks'
 const envAdapter = () => {
   switch (process.env.OUTPUT) {
     case 'vercel': return vercel()
-    case '.netlify': return netlify()
+    case 'netlify': return netlify()
     default: return node({ mode: 'standalone' })
   }
 }
@@ -60,7 +60,7 @@ export default defineConfig({
     }),
   ],
   output: 'server',
-  adapter: netlify(),
+  adapter: node({ mode: 'standalone' }),
   server: {
     port: 443,
   },
@@ -68,7 +68,7 @@ export default defineConfig({
     plugins: [
       netlify(),
       process.env.OUTPUT === 'vercel' && disableBlocks(),
-      process.env.OUTPUT === '.netlify' && disableBlocks(),
+      process.env.OUTPUT === 'netlify' && disableBlocks(),
     ],
     server: {
       proxy: {
