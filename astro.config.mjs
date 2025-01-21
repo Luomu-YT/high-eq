@@ -8,13 +8,13 @@ import vercel from '@astrojs/vercel/edge'
 import netlify from '@astrojs/netlify/edge-functions'
 import disableBlocks from './plugins/disableBlocks'
 
-// const envAdapter = () => {
-//   switch (process.env.OUTPUT) {
-//     case 'vercel': return vercel()
-//     case 'netlify': return netlify()
-//     default: return node({ mode: 'standalone' })
-//   }
-// }
+const envAdapter = () => {
+  switch (process.env.OUTPUT) {
+    case 'vercel': return vercel()
+    case 'netlify': return netlify()
+    default: return node({ mode: 'standalone' })
+  }
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,7 +60,7 @@ export default defineConfig({
     }),
   ],
   output: 'server',
-  adapter: netlify(),
+  adapter: envAdapter(),
   server: {
     port: 443,
   },
@@ -69,6 +69,9 @@ export default defineConfig({
       process.env.OUTPUT === 'vercel' && disableBlocks(),
       process.env.OUTPUT === 'netlify' && disableBlocks(),
     ],
+    // ssr: {
+    //   noExternal: ['undici'], // 允许 Vite 打包 undici
+    // },
     server: {
       proxy: {
         '/api': {

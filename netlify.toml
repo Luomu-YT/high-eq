@@ -3,7 +3,7 @@
   NODE_VERSION = "18"
 
 [build]
-  command = "astro  build"
+  command = "OUTPUT=netlify astro build"
   publish = "dist"
 
 [[edge_functions]]
