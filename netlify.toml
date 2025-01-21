@@ -6,6 +6,10 @@
   command = "OUTPUT=netlify astro build"
   publish = "dist"
 
+[[edge_functions]]
+  function = "astro"
+  path = "/*"
+
 [[headers]]
   for = "/manifest.webmanifest"
   [headers.values]
