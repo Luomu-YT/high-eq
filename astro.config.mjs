@@ -73,7 +73,7 @@ export default defineConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'http://localhost:8081', // 替换为你的后端服务器地址
+          target: 'http://[2408:844e:9d1:22b8:3df0:2428:28c2:273c]:8081', // 替换为你的后端服务器地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
