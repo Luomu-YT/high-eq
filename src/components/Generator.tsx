@@ -97,7 +97,7 @@ export default () => {
           content: currentSystemRoleSettings(),
         })
       }
-      const response = await fetch('/api/openai/completions/stream', {
+      const response = await fetch('http://140.246.113.84:8081/openai/completions/stream', {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         body: JSON.stringify({

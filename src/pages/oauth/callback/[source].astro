@@ -36,7 +36,7 @@ async function handleSubmit() {
     const source = params.get('source') === 'alipay_wallet' ? 'alipay' : params.get('source')
     const scope = params.get('scope')
 
-    const response = await fetch(`/api/oauth/callback/${source}`, {
+    const response = await fetch(`http://140.246.113.84:8081/oauth/callback/${source}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
