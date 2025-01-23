@@ -6,10 +6,6 @@ import node from '@astrojs/node'
 import AstroPWA from '@vite-pwa/astro'
 import disableBlocks from './plugins/disableBlocks'
 
-import { loadEnv } from "vite";
-
-
-const { PUBLIC_HTTPS_PROXY } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -68,7 +64,7 @@ export default defineConfig({
     server: {
       proxy: {
         '/api': {
-          target: PUBLIC_HTTPS_PROXY, // 替换为你的后端服务器地址
+          target: "http://140.246.113.84:8081", // 替换为你的后端服务器地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
