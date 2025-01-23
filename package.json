@@ -37,7 +37,8 @@
     "markdown-it-katex": "^2.0.3",
     "solid-js": "1.7.6",
     "solidjs-use": "^2.1.0",
-    "undici": "^5.22.1"
+    "undici": "^5.22.1",
+    "vite": "^6.0.11"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.18",
