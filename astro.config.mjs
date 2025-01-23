@@ -4,17 +4,10 @@ import solidJs from '@astrojs/solid-js'
 
 import node from '@astrojs/node'
 import AstroPWA from '@vite-pwa/astro'
-import vercel from '@astrojs/vercel/edge'
-import netlify from '@astrojs/netlify/edge-functions'
 import disableBlocks from './plugins/disableBlocks'
 
-const envAdapter = () => {
-  switch (process.env.OUTPUT) {
-    case 'vercel': return vercel()
-    case 'netlify': return netlify()
-    default: return node({ mode: 'standalone' })
-  }
-}
+const PUBLIC_HTTPS_PROXY = import.meta.env.PUBLIC_HTTPS_PROXY
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,7 +56,7 @@ export default defineConfig({
   output: 'static',
   adapter: node({ mode: 'standalone' }),
   server: {
-    port: 443,
+    port: 80,
   },
   vite: {
     plugins: [
@@ -73,7 +66,7 @@ export default defineConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'http://[2408:844e:9d1:22b8:3df0:2428:28c2:273c]:8081', // 替换为你的后端服务器地址
+          target: `${PUBLIC_HTTPS_PROXY}`, // 替换为你的后端服务器地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
