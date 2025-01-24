@@ -121,12 +121,19 @@ export default () => {
       const decoder = new TextDecoder('utf-8')
       let done = false
 
+      let i = 0
       while (!done) {
+
         const { value, done: readerDone } = await reader.read()
+
+        i++
+        console.log("返回数据",i,value)
+
         if (value) {
           const char = decoder.decode(value)
           if (char === '\n' && currentAssistantMessage().endsWith('\n'))
             continue
+
 
           // 处理累积的数据块
           const chunks = char.split('\n')
